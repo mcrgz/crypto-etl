@@ -78,10 +78,8 @@ class MainApp:
         self.db_handler.truncateTable(hist_table)
         df_final = pd.DataFrame()
         coin_hist_data = df_api_coinsmarket[api_coins_pk].tolist()
-        print(coin_hist_data)
         TipoDato = 'prices'
         for coin in coin_hist_data:
-            print(coin)
             df_api_trending = self.apiConexion.obtieneHistorial(coin, TipoDato)
             df_final = pd.concat([df_final, df_api_trending], ignore_index=True)
 
