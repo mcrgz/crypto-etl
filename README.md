@@ -56,5 +56,7 @@ El objetivo del proyecto es construir un ETL pipeline. Recolectando datos cierta
 
 Para detalles del diseño, flujo de datos y esquema de la base de datos, consulta:<br>
 
-- [Esquematizacion y Diseño](Documentacion\Esquematizacion_Diseño.md)
-- [Explicacion de Pipeline](Documentacion\Data_Pipeline_Explicacion.md)
+- [Esquematizacion y Diseño](Documentacion/Esquematizacion_Diseño.md)
+- [Explicacion de Pipeline](Documentacion/Data_Pipeline_Explicacion.md)
+
+---

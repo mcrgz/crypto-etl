@@ -47,7 +47,7 @@
   - En columnas tipo arreglo, se eliminaron datos innecesarios directamente del JSON antes de normalizarlos.
   - Se usó `pd.json_normalize` para desanidar estructuras y estandarizar nombres de columnas (`.` → `_`).
 - Validación:
-  - Solo se cargan registros cuyo `IDCoin` ya exista en la tabla principal `Coins`, especialmente en `CoinsHistory`.
+  - Solo se cargan registros cuyo `IDCoin` ya exista en la tabla principal `Coins`, especialmente en `CoinsHistory` que contiene las monedas existentes en CoinsMarkets.
 
 ---
 
