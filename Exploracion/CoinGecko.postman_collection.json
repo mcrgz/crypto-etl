@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "ecd2b874-9513-4acb-9f2b-a29a66e22aaf",
+		"name": "CoinGecko",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31164331"
+	},
+	"item": [
+		{
+			"name": "Coin List",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Market Top 10",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc",
+					"protocol": "https",
+					"host": [
+						"api",
+						"coingecko",
+						"com"
+					],
+					"path": [
+						"api",
+						"v3",
+						"coins",
+						"markets"
+					],
+					"query": [
+						{
+							"key": "vs_currency",
+							"value": "usd"
+						},
+						{
+							"key": "order",
+							"value": "market_cap_desc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trending",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "History Chart x ID",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "CG-MDXzwMkZTEMXsp5ktsHGZZWa",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "x-cg-demo-api-key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=5",
+					"protocol": "https",
+					"host": [
+						"api",
+						"coingecko",
+						"com"
+					],
+					"path": [
+						"api",
+						"v3",
+						"coins",
+						"bitcoin",
+						"market_chart"
+					],
+					"query": [
+						{
+							"key": "vs_currency",
+							"value": "usd"
+						},
+						{
+							"key": "days",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Categories Market",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

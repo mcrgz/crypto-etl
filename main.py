@@ -1,13 +1,12 @@
-##Se extrae los datos de los primeros 10 valores
-##Se valida si no falta ninguna cryto si no se agrega
-
-##Se carga con el IDCryto para la relacion
-##Se ejecuta la query por los primeros 10 para el valor de mercado con un rango de 7 dias.
 from sql_handler import SQLServerHandler
 from api_handler import Api
 import os
 import pandas as pd
+from dotenv import load_dotenv
+from datetime import datetime, timedelta
 
+#Carga Variables de entorno
+load_dotenv()
 
 class MainApp:
     def __init__(self, db_connection_string):
@@ -37,8 +36,10 @@ class MainApp:
 
         #Se convierten los Id's a una lista para poder eliminarlos.
         ids_a_borrar = df_solo_db[db_coins_pk].tolist()
-        self.db_handler.deleteTabla(ids_a_borrar,coin_table,db_coins_pk)
+        self.db_handler.deleteTablabyList(ids_a_borrar,coin_table,db_coins_pk)
 
+        #Se vuelve a actualizar el df con el fin de obtener los datos actualizados.
+        df_db_coins = self.db_handler.obtieneCoins()
 
         ######################################################################################################
         #Proceso para obtener y guardar las 15 monedas con el market cap mas alto.
@@ -75,7 +76,17 @@ class MainApp:
         ######################################################################################################
 
         hist_table = 'CoinsHistory'
-        self.db_handler.truncateTable(hist_table)
+        #El registro que se llevara sera de 5 dias por lo que se eliminan el dia 6.
+        fecha_eliminar = str((datetime.today() - timedelta(days=6)).date())
+        print(fecha_eliminar)
+        self.db_handler.deleteTablabyValue(fecha_eliminar, hist_table, "CAST(fecha as date)")
+
+        #si se ejecuta mas veces al dia se elimina el dia y se carga de nuevo
+        fecha_agregar = str((datetime.today()).date())
+        print(fecha_agregar)
+        self.db_handler.deleteTablabyValue(fecha_agregar, hist_table, "CAST(fecha as date)")
+
+        #self.db_handler.truncateTable(hist_table)
         df_final = pd.DataFrame()
         coin_hist_data = df_api_coinsmarket[api_coins_pk].tolist()
         TipoDato = 'prices'

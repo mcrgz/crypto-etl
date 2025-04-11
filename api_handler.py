@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import datetime
 
 class Api:
 
@@ -80,7 +81,7 @@ class Api:
             raise
         
     def obtieneHistorial(self,Coin,TipoDato):
-        url_enpoint = f'coins/{Coin}/market_chart?vs_currency=usd&days=1'
+        url_enpoint = f'coins/{Coin}/market_chart?vs_currency=usd&days=6'
         url = f"{self.base_url}/{url_enpoint}"
         try:
             response = requests.get(url, headers=self.headers)  
@@ -88,6 +89,8 @@ class Api:
             data =  response.json()
             df = pd.DataFrame(data[TipoDato], columns=['fecha', 'value'])
             df['fecha'] = pd.to_datetime(df['fecha'], unit='ms')
+            hoy = datetime.datetime.today().date()
+            df = df[df['fecha'].dt.date == hoy]
             df['id'] = Coin
             df['type'] = TipoDato
             return df
