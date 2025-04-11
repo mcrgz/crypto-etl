@@ -78,12 +78,10 @@ class MainApp:
         hist_table = 'CoinsHistory'
         #El registro que se llevara sera de 5 dias por lo que se eliminan el dia 6.
         fecha_eliminar = str((datetime.today() - timedelta(days=6)).date())
-        print(fecha_eliminar)
         self.db_handler.deleteTablabyValue(fecha_eliminar, hist_table, "CAST(fecha as date)")
 
         #si se ejecuta mas veces al dia se elimina el dia y se carga de nuevo
         fecha_agregar = str((datetime.today()).date())
-        print(fecha_agregar)
         self.db_handler.deleteTablabyValue(fecha_agregar, hist_table, "CAST(fecha as date)")
 
         #self.db_handler.truncateTable(hist_table)

@@ -70,3 +70,6 @@ Base de datos relacional: **SQL Server**
   4. Se carga a SQL Server usando `df.to_sql` de `pandas` con `sqlalchemy`, usando `if_exists='append'`.
 
 ---
+### Caso de Uso en Power BI
+
+![Power BI](Coins.png)

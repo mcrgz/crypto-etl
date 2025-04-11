@@ -11,7 +11,7 @@ class SQLServerHandler:
         self.engine = create_engine(connection_string)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
-
+ 
 
     #Esta funcion obtiene la lista de criptomonedas
     def obtieneCoins(self):
@@ -31,7 +31,11 @@ class SQLServerHandler:
             connection.commit()
 
     def insertTablas(self,df,NombreTabla):
-        df.to_sql(NombreTabla, con=self.engine, if_exists='append', index=False)
+        try:
+            df.to_sql(NombreTabla, con=self.engine, if_exists='append', index=False)
+        except SQLAlchemyError as e:
+                print(f"Error en la base de datos: {e}")
+                raise    
 
     def deleteTablabyList(self,lista,NombreTabla,campo):
         #Por cada valor se genera una lista con ids
@@ -39,18 +43,25 @@ class SQLServerHandler:
         query = text(f"DELETE FROM {NombreTabla} WHERE {campo} IN ({where})")
         #Se genera un diccionario con la asignacion de Id's y valor
         params = {f"id{i}": id_val for i, id_val in enumerate(lista)}
+        try:
         # Ejecutar
-        if params:
-            with self.engine.connect() as conn:
-                conn.execute(query, params)
-            conn.commit()
+            if params:
+                with self.engine.connect() as conn:
+                    conn.execute(query, params)
+                conn.commit()
+        except SQLAlchemyError as e:
+                print(f"Error en la base de datos: {e}")
+                raise            
 
     def deleteTablabyValue(self,Valor,NombreTabla,campo):
         #Por cada valor se genera una lista con ids
         if type(Valor) == str:
             Valor = "'"+Valor+"'"
-        query = text(f"DELETE FROM {NombreTabla} WHERE {campo} = {Valor}")
-        print(query)
-        with self.engine.connect() as conn:
-            conn.execute(query)
-            conn.commit()
+        try:
+            query = text(f"DELETE FROM {NombreTabla} WHERE {campo} = {Valor}")
+            with self.engine.connect() as conn:
+                conn.execute(query)
+                conn.commit()
+        except SQLAlchemyError as e:
+                print(f"Error en la base de datos: {e}")
+                raise    
